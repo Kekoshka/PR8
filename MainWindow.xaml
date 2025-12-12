@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <StackPanel >
+            <StackPanel Orientation="Horizontal">
+                
+            </StackPanel>
+            <TextBlock x:Name="city" Width="100" Height="25"/>
+            <DataGrid>
+                
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </Window>

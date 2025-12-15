@@ -32,7 +32,9 @@ namespace PR8
             };
             var response = await client.SendAsync(message);
             var json = await response.Content.ReadAsStringAsync();
-            var rez = Regex.Match(json,"pos")
+        }
+        private void GetPosition()
+        {
         }
     }
 }

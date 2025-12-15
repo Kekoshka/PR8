@@ -16,6 +16,7 @@ namespace PR8.Context
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Weather> Weathers { get; set; }
+        public DbSet<Position> Positions { get; set; }
         public DbSet<Day> Days { get; set; }
         public DbSet<Hour> Hours { get; set; }
     }

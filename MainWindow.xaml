@@ -7,14 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel >
-            <StackPanel Orientation="Horizontal">
-                
-            </StackPanel>
-            <TextBlock x:Name="city" Width="100" Height="25"/>
-            <DataGrid>
-                
-            </DataGrid>
+        <StackPanel Orientation="Horizontal" Height="25" VerticalAlignment="Top">
+            <TextBox Text="Город:" BorderThickness="0"/>
+            <TextBlock x:Name="City" Width="200" Height="25"/>
+            <TextBox x:Name="Count" Text="Запросов: 0/30" BorderThickness="0" Width="100" Height="25"/>
         </StackPanel>
+        <StackPanel x:Name="DaysParent" Margin="0,25,0,0"/>
+
     </Grid>
 </Window>

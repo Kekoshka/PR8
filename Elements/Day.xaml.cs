@@ -24,7 +24,7 @@ namespace PR8.Elements
         {
             InitializeComponent();
             Date.Content = day.Date.ToString();
-            foreach(var hour in day.Hours)
+            foreach(var hour in day.Hours.OrderBy(h => h.Time))
                 HoursParent.Children.Add(new Hour(hour));
         }
     }

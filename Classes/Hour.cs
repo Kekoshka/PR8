@@ -13,5 +13,6 @@ namespace PR8.Classes
         public int Temperature { get; set; }
         public int Humidity { get; set; }
         public int Pressure { get; set; }
+        public Day Day { get; set; }
     }
 }

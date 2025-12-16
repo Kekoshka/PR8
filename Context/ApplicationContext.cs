@@ -21,7 +21,9 @@ namespace PR8.Context
         public DbSet<Hour> Hours { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=10.0.201.112;User Id=ISP_22_1_1;Password=ck2PjQQBIo15_;Database=base1_ISP_22_1_1;Encrypt=false");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=PR8;Encrypt=false;Trusted_Connection=true");
         }
+        //Server=localhost;Database=PR6;Encrypt=false;Trusted_Connection=true;
+        //Server=10.0.201.112;User Id=ISP_22_1_1;Password=ck2PjQQBIo15_;Database=base1_ISP_22_1_1;Encrypt=false
     }
 }

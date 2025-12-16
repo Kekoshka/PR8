@@ -13,7 +13,9 @@
             <Button x:Name="GetWeather" Click="TryGetWeather" Content="Получить" Width="100"/>
             <TextBlock x:Name="Count" Text="Запросов: 0/30" Width="100" Height="25"/>
         </StackPanel>
-        <StackPanel x:Name="DaysParent" Margin="0,25,0,0"/>
+        <ScrollViewer Margin="0,25,0,0">
+            <StackPanel x:Name="DaysParent" />
+        </ScrollViewer>
 
     </Grid>
 </Window>

@@ -28,6 +28,7 @@ namespace PR8
         public MainWindow()
         {
             InitializeComponent();
+            GetUserCounter();
         }
 
         private async Task<Position> GetPosition(string place)
@@ -63,7 +64,7 @@ namespace PR8
             message.RequestUri = new Uri("https://api.weather.yandex.ru/graphql/query");
             message.Method = HttpMethod.Post;
             
-            var query = "{\r\n  weatherByPoint(request: { lat: 52.37175, lon: 4.89358 }) {\r\n    forecast {\r\n      days(limit: 10) {\r\n        hours {\r\n          time\r\n          temperature\r\n          humidity\r\n          pressure\r\n        }\r\n      }\r\n    }\r\n  }\r\n}";
+            var query = "{\r\n  weatherByPoint(request: { lat: "+position.X.ToString().Replace(",",".")+", lon: "+ position.Y.ToString().Replace(",", ".") + "}) {\r\n    forecast {\r\n      days(limit: 10) {\r\n        hours {\r\n          time\r\n          temperature\r\n          humidity\r\n          pressure\r\n        }\r\n      }\r\n    }\r\n  }\r\n}";
             var requestBody = new
             {
                 query 
@@ -88,13 +89,14 @@ namespace PR8
                     Date = DateOnly.FromDateTime(dateOnly),
                     Hours = []
                 };
-                for (int j = 0; j < 24; j++)
+                var hoursCount = day.GetProperty("hours").GetArrayLength();
+                for (int j = 0; j < hoursCount; j++)
                 {
-                    var hour = day.GetProperty("hours")[j];
-                    var time = hour.GetProperty("time").GetDateTime();
-                    var temperature = hour.GetProperty("temperature");
-                    var humuduty = hour.GetProperty("humidity");
-                    var pressure = hour.GetProperty("pressure");
+                    var isGet = day.TryGetProperty("hours", out var hour);
+                    var time = hour[j].GetProperty("time").GetDateTime();
+                    var temperature = hour[j].GetProperty("temperature");
+                    var humuduty = hour[j].GetProperty("humidity");
+                    var pressure = hour[j].GetProperty("pressure");
                     Classes.Hour newHour = new()
                     {
                         Id = Guid.NewGuid(),
@@ -116,8 +118,8 @@ namespace PR8
             {
                 var positionText = City.Text;
                 using var context = new ApplicationContext();
-                bool isNeedRefresh = context.Weathers.Include(w => w.Position).Any(w => w.RequestTime < DateTime.UtcNow.AddMinutes(-30) && w.Position.Name == positionText);
-                if (!isNeedRefresh)
+                var existsWeather = context.Weathers.Include(w => w.Days).Include(w => w.Position).FirstOrDefault(w => w.Position.Name == positionText);
+                if (existsWeather is null)
                 {
                     var position = await GetPosition(positionText);
                     var days = await GetWeatherByPosition(position);
@@ -132,9 +134,18 @@ namespace PR8
                     context.SaveChanges();
                     AddUserCounter();
                 }
-                context.SaveChanges();
-                var weather = context.Weathers.First(w => w.Position.Name == positionText);
-                foreach (var day in weather.Days)
+                else if(existsWeather.RequestTime < DateTime.UtcNow.AddMinutes(-30))
+                {
+                    var days = await GetWeatherByPosition(existsWeather.Position);
+                    existsWeather.Days.Clear();
+                    existsWeather.Days = days;
+                    existsWeather.RequestTime = DateTime.UtcNow;
+                    context.SaveChanges();
+                    AddUserCounter();
+                }
+                var weather = context.Weathers.Include(w => w.Days).ThenInclude(d => d.Hours).First(w => w.Position.Name == positionText);
+                DaysParent.Children.Clear();
+                foreach (var day in weather.Days.OrderBy(d => d.Date))
                 {
                     DaysParent.Children.Add(new Elements.Day(day));
                 }
@@ -161,11 +172,19 @@ namespace PR8
                 };
                 context.Users.Add(newUser);
                 context.SaveChanges();
-                Count.Text = $"Запросов: {user.RequestCount}/30";
+                Count.Text = $"Запросов: {newUser.RequestCount}/30";
                 return;
             }
             user.RequestCount += 1;
             context.SaveChanges();
+            Count.Text = $"Запросов: {user.RequestCount}/30";
+        }
+        private void GetUserCounter()
+        {
+            using var context = new ApplicationContext();
+            var user = context.Users.FirstOrDefault(u => u.UserIp == GetIp());
+            if (user is null)
+                return;
             Count.Text = $"Запросов: {user.RequestCount}/30";
         }
 

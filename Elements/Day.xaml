@@ -17,10 +17,10 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock x:Name="Time" TextAlignment="Center" Text="00:00" FontSize="20"/>
-                <TextBlock x:Name="Temperature" Grid.Column="1" TextAlignment="Center" Text="+15" FontSize="20"/>
-                <TextBlock x:Name="Pressure" Grid.Column="2" TextAlignment="Center" Text="660 " FontSize="20"/>
-                <TextBlock x:Name="Humidity" Grid.Column="3" TextAlignment="Center" Text="50%" FontSize="20"/>
+                <TextBlock x:Name="Time" TextAlignment="Center" Text="Время" FontSize="20"/>
+                <TextBlock x:Name="Temperature" Grid.Column="1" TextAlignment="Center" Text="Температура" FontSize="20"/>
+                <TextBlock x:Name="Pressure" Grid.Column="2" TextAlignment="Center" Text="Давление" FontSize="20"/>
+                <TextBlock x:Name="Humidity" Grid.Column="3" TextAlignment="Center" Text="Влажность" FontSize="20"/>
             </Grid>
             <ScrollViewer Margin="10,70,10,10">
                 <StackPanel x:Name="HoursParent" >

@@ -8,7 +8,7 @@ namespace PR8.Classes
 {
     public class Hour
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public TimeOnly Time { get; set; }
         public int Temperature { get; set; }
         public int Humidity { get; set; }

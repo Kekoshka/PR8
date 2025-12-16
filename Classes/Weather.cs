@@ -9,8 +9,9 @@ namespace PR8.Classes
 {
     public class Weather
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public Position Position { get; set; }
         public ICollection<Day> Days { get; set; }
+        public DateTime RequestTime { get; set; }
     }
 }

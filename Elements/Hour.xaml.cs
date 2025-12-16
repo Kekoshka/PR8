@@ -20,9 +20,13 @@ namespace PR8.Elements
     /// </summary>
     public partial class Hour : UserControl
     {
-        public Hour()
+        public Hour(Classes.Hour hour)
         {
             InitializeComponent();
+            Temperature.Text = hour.Temperature.ToString();
+            Pressure.Text = hour.Pressure.ToString();
+            Time.Text = hour.Time.ToString();
+            Humidity.Text = hour.Humidity.ToString();
         }
     }
 }

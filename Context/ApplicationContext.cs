@@ -10,7 +10,7 @@ namespace PR8.Context
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions options) : base(options) 
+        public ApplicationContext()
         {
             Database.EnsureCreated();
         }
@@ -19,5 +19,9 @@ namespace PR8.Context
         public DbSet<Position> Positions { get; set; }
         public DbSet<Day> Days { get; set; }
         public DbSet<Hour> Hours { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=10.0.201.112;User Id=ISP_22_1_1;Password=ck2PjQQBIo15_;Database=base1_ISP_22_1_1;Encrypt=false");
+        }
     }
 }

@@ -9,8 +9,9 @@
     <Grid>
         <StackPanel Orientation="Horizontal" Height="25" VerticalAlignment="Top">
             <TextBox Text="Город:" BorderThickness="0"/>
-            <TextBlock x:Name="City" Width="200" Height="25"/>
-            <TextBox x:Name="Count" Text="Запросов: 0/30" BorderThickness="0" Width="100" Height="25"/>
+            <TextBox x:Name="City" Width="200" Height="25" BorderThickness="0" />
+            <Button x:Name="GetWeather" Click="TryGetWeather" Content="Получить" Width="100"/>
+            <TextBlock x:Name="Count" Text="Запросов: 0/30" Width="100" Height="25"/>
         </StackPanel>
         <StackPanel x:Name="DaysParent" Margin="0,25,0,0"/>
 

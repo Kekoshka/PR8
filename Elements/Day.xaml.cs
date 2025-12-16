@@ -20,9 +20,12 @@ namespace PR8.Elements
     /// </summary>
     public partial class Day : UserControl
     {
-        public Day()
+        public Day(Classes.Day day)
         {
             InitializeComponent();
+            Date.Content = day.Date.ToString();
+            foreach(var hour in day.Hours)
+                HoursParent.Children.Add(new Hour(hour));
         }
     }
 }
